@@ -13,7 +13,9 @@ export default function Login() {
     try {
       const r = await api.post("/auth/login", { email, password });
       login(r.data);
-      const role = String(r.data?.role || r.data?.user?.role || "").toUpperCase();
+      const role = String(
+        r.data?.role || r.data?.user?.role || "",
+      ).toUpperCase();
       nav(role.includes("ADMIN") ? "/admin" : "/");
     } catch (x) {
       setError(x.response?.data?.message || "Login failed");

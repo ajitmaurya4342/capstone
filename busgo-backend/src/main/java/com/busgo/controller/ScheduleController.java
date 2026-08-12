@@ -27,6 +27,11 @@ public class ScheduleController {
         return service.search(from, to, date);
     }
 
+    @GetMapping("/{id}")
+    public Schedule getSchedule(@PathVariable UUID id) {
+        return service.getById(id);
+    }
+
     @GetMapping("/{id}/seats")
     public List<String> seats(@PathVariable UUID id) {
         return service.seats(id);

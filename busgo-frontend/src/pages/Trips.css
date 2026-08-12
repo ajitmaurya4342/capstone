@@ -1,0 +1,752 @@
+.trips-page {
+  min-height: calc(100vh - 80px);
+  background: #f6f8fb;
+  padding: 10px 20px 80px;
+}
+
+.trips-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* HEADER */
+
+.trips-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 35px;
+}
+
+.page-label {
+  display: block;
+  color: #ef4444;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  margin-bottom: 8px;
+}
+
+.trips-header h1 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 800;
+  color: #172033;
+}
+
+.trips-header p {
+  margin: 8px 0 0;
+  color: #7b8494;
+  font-size: 15px;
+}
+
+.booking-count {
+  background: white;
+  border: 1px solid #e8ebf0;
+  border-radius: 16px;
+  padding: 14px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 100px;
+}
+
+.booking-count strong {
+  font-size: 24px;
+  color: #172033;
+}
+
+.booking-count span {
+  font-size: 12px;
+  color: #8a93a3;
+}
+
+/* TRIP CARD */
+
+.trip-card {
+  background: white;
+  border: 1px solid #e7eaf0;
+  border-radius: 22px;
+  margin-bottom: 24px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(20, 30, 50, 0.06);
+  transition: 0.25s ease;
+}
+
+.trip-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(20, 30, 50, 0.1);
+}
+
+/* TOP */
+
+.ticket-top {
+  padding: 22px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #edf0f4;
+}
+
+.operator {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.operator-icon {
+  width: 45px;
+  height: 45px;
+  border-radius: 13px;
+  background: #fff1f1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.operator strong {
+  display: block;
+  font-size: 15px;
+  color: #202938;
+}
+
+.operator span {
+  display: block;
+  margin-top: 3px;
+  color: #8b94a4;
+  font-size: 12px;
+}
+
+.booking-status {
+  padding: 7px 13px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.status-confirmed {
+  color: #16804b;
+  background: #eaf9f1;
+}
+
+.status-confirmed .status-dot {
+  background: #18a866;
+}
+
+.status-cancelled {
+  color: #d53c3c;
+  background: #fff0f0;
+}
+
+.status-cancelled .status-dot {
+  background: #e54848;
+}
+
+.status-completed {
+  color: #3564a8;
+  background: #edf4ff;
+}
+
+.status-completed .status-dot {
+  background: #4b82d1;
+}
+
+.status-pending {
+  color: #9a6a12;
+  background: #fff8e7;
+}
+
+.status-pending .status-dot {
+  background: #d99a1c;
+}
+
+/* ROUTE */
+
+.route-section {
+  padding: 32px 35px;
+  display: grid;
+  grid-template-columns: 1fr 180px 1fr;
+  align-items: center;
+}
+
+.route-city {
+  display: flex;
+  flex-direction: column;
+}
+
+.route-city.arrival {
+  text-align: right;
+  align-items: flex-end;
+}
+
+.route-time {
+  font-size: 12px;
+  font-weight: 800;
+  color: #172033;
+}
+
+.route-city strong {
+  font-size: 15px;
+  color: #303949;
+  margin-top: 5px;
+}
+
+.route-city small {
+  color: #929baa;
+  font-size: 11px;
+  margin-top: 4px;
+}
+
+.route-progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.route-dot {
+  width: 10px;
+  height: 10px;
+  border: 3px solid #ef4444;
+  border-radius: 50%;
+  background: white;
+  flex-shrink: 0;
+}
+
+.route-line {
+  flex: 1;
+  height: 2px;
+  border-top: 2px dashed #d9dde5;
+  position: relative;
+}
+
+.route-line span {
+  position: absolute;
+  left: 50%;
+  top: -12px;
+  transform: translateX(-50%);
+  background: white;
+  color: #a0a7b3;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 3px 7px;
+}
+
+/* DETAILS */
+
+.journey-details {
+  margin: 0 28px;
+  padding: 20px 0;
+  border-top: 1px solid #edf0f4;
+  border-bottom: 1px solid #edf0f4;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.detail-icon {
+  width: 38px;
+  height: 38px;
+  background: #f7f8fa;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+}
+
+.detail-item small {
+  display: block;
+  color: #929baa;
+  font-size: 11px;
+  margin-bottom: 4px;
+}
+
+.detail-item strong {
+  color: #303949;
+  font-size: 13px;
+}
+
+.seat-list {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.seat-chip {
+  background: #edf9f2;
+  color: #16804b;
+  border-radius: 6px;
+  padding: 3px 7px;
+  font-size: 11px;
+}
+
+/* DIVIDER */
+
+.ticket-divider {
+  display: flex;
+  align-items: center;
+  position: relative;
+  height: 18px;
+}
+
+.ticket-divider span {
+  width: 18px;
+  height: 18px;
+  background: #f6f8fb;
+  border-radius: 50%;
+}
+
+.ticket-divider span:first-child {
+  margin-left: -9px;
+}
+
+.ticket-divider span:last-child {
+  margin-right: -9px;
+}
+
+.ticket-divider div {
+  flex: 1;
+  border-top: 2px dashed #e0e4ea;
+}
+
+/* FOOTER */
+
+.trip-footer {
+  padding: 22px 28px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.booking-info {
+  flex: 1;
+}
+
+.booking-info span,
+.fare-info span {
+  display: block;
+  font-size: 10px;
+  color: #929baa;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+}
+
+.booking-info strong {
+  display: block;
+  margin-top: 4px;
+  color: #394252;
+  font-size: 12px;
+  word-break: break-all;
+}
+
+.booking-info small {
+  display: block;
+  color: #9aa1ad;
+  margin-top: 4px;
+  font-size: 11px;
+}
+
+.fare-info {
+  text-align: right;
+}
+
+.fare-info strong {
+  display: block;
+  font-size: 22px;
+  color: #172033;
+  margin-top: 3px;
+}
+
+.fare-info small {
+  color: #929baa;
+  font-size: 11px;
+}
+
+.cancel-btn {
+  border: 1px solid #f0b6b6;
+  background: white;
+  color: #dc4444;
+  border-radius: 10px;
+  padding: 11px 17px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.cancel-btn:hover {
+  background: #fff2f2;
+}
+
+/* EMPTY */
+
+.empty-trips {
+  background: white;
+  border: 1px solid #e7eaf0;
+  border-radius: 22px;
+  text-align: center;
+  padding: 75px 30px;
+}
+
+.empty-trip-icon {
+  width: 75px;
+  height: 75px;
+  margin: 0 auto 20px;
+  border-radius: 22px;
+  background: #fff1f1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 35px;
+}
+
+.empty-trips h2 {
+  margin: 0;
+  color: #202938;
+}
+
+.empty-trips p {
+  max-width: 430px;
+  margin: 10px auto 25px;
+  color: #8a93a2;
+  line-height: 1.6;
+}
+
+.find-bus-btn,
+.retry-btn {
+  border: 0;
+  background: #ef4444;
+  color: white;
+  padding: 12px 22px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* ERROR */
+
+.trip-error {
+  background: white;
+  border-radius: 20px;
+  padding: 70px 30px;
+  text-align: center;
+}
+
+.error-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #fff0f0;
+  color: #e54848;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  font-weight: 800;
+  font-size: 22px;
+}
+
+.trip-error h2 {
+  color: #202938;
+}
+
+.trip-error p {
+  color: #858e9d;
+}
+
+/* LOADING */
+
+.trip-skeleton {
+  background: white;
+  border-radius: 20px;
+  padding: 25px;
+  margin-bottom: 20px;
+}
+
+.skeleton {
+  background: #edf0f3;
+  border-radius: 8px;
+  animation: pulse 1.4s infinite;
+}
+
+.skeleton-small {
+  width: 100px;
+  height: 12px;
+}
+
+.skeleton-title {
+  width: 180px;
+  height: 35px;
+  margin-top: 10px;
+}
+
+.skeleton-line {
+  width: 70%;
+  height: 15px;
+  margin-bottom: 15px;
+}
+
+.skeleton-line.short {
+  width: 40%;
+}
+
+.skeleton-box {
+  width: 100%;
+  height: 100px;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+  .trips-page {
+    padding: 30px 14px 60px;
+  }
+
+  .trips-header {
+    align-items: flex-start;
+  }
+
+  .trips-header h1 {
+    font-size: 30px;
+  }
+
+  .booking-count {
+    display: none;
+  }
+
+  .ticket-top {
+    padding: 18px;
+  }
+
+  .route-section {
+    padding: 25px 18px;
+    grid-template-columns: 1fr 90px 1fr;
+  }
+
+  .route-time {
+    font-size: 19px;
+  }
+
+  .route-city strong {
+    font-size: 13px;
+  }
+
+  .journey-details {
+    margin: 0 18px;
+    grid-template-columns: 1fr;
+  }
+
+  .trip-footer {
+    padding: 20px 18px;
+    flex-wrap: wrap;
+  }
+
+  .fare-info {
+    text-align: left;
+  }
+
+  .cancel-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .booking-status {
+    font-size: 10px;
+    padding: 6px 9px;
+  }
+
+  .operator-icon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .operator strong {
+    font-size: 13px;
+  }
+
+  .route-section {
+    grid-template-columns: 1fr 55px 1fr;
+  }
+
+  .route-line span {
+    display: none;
+  }
+
+  .route-time {
+    font-size: 17px;
+  }
+
+  .trip-footer {
+    gap: 18px;
+  }
+}
+
+/* =========================
+   CONFIRMED / CANCELLED TABS
+========================= */
+
+.trip-tabs {
+  display: flex;
+  gap: 6px;
+  width: fit-content;
+  background: #eef1f5;
+  padding: 5px;
+  border-radius: 14px;
+  margin-bottom: 28px;
+}
+
+.trip-tabs button {
+  border: none;
+  background: transparent;
+  color: #747d8d;
+  padding: 11px 18px;
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.trip-tabs button:hover {
+  color: #202938;
+}
+
+.trip-tabs button.active {
+  background: #ffffff;
+  color: #16804b;
+  box-shadow: 0 3px 12px rgba(20, 30, 50, 0.08);
+}
+
+.trip-tabs button.active.cancelled-tab {
+  color: #dc4444;
+}
+
+/* TAB ICON */
+
+.tab-icon {
+  width: 23px;
+  height: 23px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.confirmed-icon {
+  background: #dff6e9;
+  color: #16804b;
+}
+
+.cancelled-icon {
+  background: #ffe4e4;
+  color: #dc4444;
+}
+
+.trip-tabs button.active .confirmed-icon {
+  background: #16804b;
+  color: #ffffff;
+}
+
+.trip-tabs button.active.cancelled-tab .cancelled-icon {
+  background: #dc4444;
+  color: #ffffff;
+}
+
+/* COUNT */
+
+.tab-count {
+  min-width: 22px;
+  height: 22px;
+
+  padding: 0 6px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 20px;
+
+  background: #e2e6ec;
+  color: #697384;
+
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.trip-tabs button.active .tab-count {
+  background: #e5f7ed;
+  color: #16804b;
+}
+
+.trip-tabs button.active.cancelled-tab .tab-count {
+  background: #ffe8e8;
+  color: #dc4444;
+}
+
+/* ROUTE CLOCK */
+
+.route-clock {
+  display: block;
+  font-size: 18px;
+  font-weight: 800;
+  color: #172033;
+  margin-top: 3px;
+}
+
+/* MOBILE */
+
+@media (max-width: 480px) {
+  .trip-tabs {
+    width: 100%;
+    margin-bottom: 22px;
+  }
+
+  .trip-tabs button {
+    flex: 1;
+    padding: 10px 8px;
+    font-size: 12px;
+  }
+
+  .tab-icon {
+    width: 21px;
+    height: 21px;
+  }
+
+  .route-clock {
+    font-size: 16px;
+  }
+}

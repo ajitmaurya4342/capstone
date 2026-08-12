@@ -37,6 +37,11 @@ public class ScheduleService {
         return save(s, r);
     }
 
+    public Schedule getById(UUID id) {
+        return repo.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Schedule not found"));
+    }
+
     public Schedule update(UUID id, ScheduleRequest r) {
         return save(repo.findById(id).orElseThrow(() -> new NoSuchElementException("Schedule not found")), r);
     }
