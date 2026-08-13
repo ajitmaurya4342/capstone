@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import "./Home.css";
+import ScheduleTab from "../components/ScheduleTab";
 import moment from "moment";
 
 export default function Home() {
@@ -176,104 +177,12 @@ export default function Home() {
 
       {/* SEARCH RESULTS */}
       {results.length > 0 && (
-        <section className="results-section">
-          <div className="section-container">
-            <div className="results-title">
-              <div>
-                <span className="section-label">AVAILABLE BUSES</span>
-
-                <h2>
-                  {form.from} → {form.to}
-                </h2>
-
-                <p>{results.length} buses available for your journey</p>
-              </div>
-
-              {/* <button className="filter-btn">⚙ Filters</button> */}
-            </div>
-
-            <div className="bus-list">
-              {results.map((s) => (
-                <article className="bus-card" key={s.id}>
-                  {/* OPERATOR */}
-                  <div className="bus-company">
-                    <div className="bus-logo">🚌</div>
-
-                    <div>
-                      <h3>{s.bus?.operatorName || "Bus Operator"}</h3>
-
-                      <span className="bus-type">
-                        {s.bus?.busType || "SEATER"}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* JOURNEY */}
-                  <div className="journey-time">
-                    {/* DEPARTURE */}
-                    <div className="time-block">
-                      <strong>
-                        {s?.departureTime
-                          ? moment(s.departureTime).format("ddd, DD MMM YYYY")
-                          : "--"}
-                      </strong>
-
-                      <strong>
-                        {s?.departureTime
-                          ? moment(s.departureTime).format("hh:mm A")
-                          : "--"}
-                      </strong>
-
-                      <span>{s.fromCity}</span>
-                    </div>
-
-                    {/* JOURNEY LINE */}
-                    <div className="journey-line">
-                      <span>●</span>
-                      <div></div>
-                      <span>●</span>
-                    </div>
-
-                    {/* ARRIVAL */}
-                    <div className="time-block">
-                      <strong>
-                        {s?.arrivalTime
-                          ? moment(s.arrivalTime).format("ddd, DD MMM YYYY")
-                          : "--"}
-                      </strong>
-
-                      <strong>
-                        {s?.arrivalTime
-                          ? moment(s.arrivalTime).format("hh:mm A")
-                          : "--"}
-                      </strong>
-
-                      <span>{s.toCity}</span>
-                    </div>
-                  </div>
-
-                  {/* PRICE + SELECT SEATS */}
-                  <div className="bus-action">
-                    <div className="bus-price">
-                      <span className="starting">Price :</span>
-
-                      <strong>
-                        ₹{s.fare} <span className="per-seat">per seat</span>
-                      </strong>
-                    </div>
-
-                    <button
-                      className="seat-btn"
-                      onClick={() => nav(`/seats/${s.id}`)}
-                    >
-                      Select Seats
-                    </button>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
+        <ScheduleTab
+          results={results}
+          from={form.from}
+          to={form.to}
+          onSelectSeats={(id) => nav(`/seats/${id}`)}
+        />
       )}
 
       {/* NO RESULTS */}

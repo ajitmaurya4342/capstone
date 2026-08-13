@@ -9,11 +9,9 @@ export default function Header() {
   const nav = useNavigate();
 
   const [authModal, setAuthModal] = useState(null);
+  console.log({ user });
 
-  const isAdmin = (user?.role || user?.user?.role || "")
-    .toString()
-    .toUpperCase()
-    .includes("ADMIN");
+  const isAdmin = user?.admin;
 
   const handleLogout = () => {
     logout();
@@ -53,16 +51,12 @@ export default function Header() {
               </>
             ) : (
               <>
-                <button
-                  className="my-bookings-btn"
-                  onClick={() => nav("/trips")}
-                >
-                  🎫 My Bookings
-                </button>
-
-                {isAdmin && (
-                  <button className="admin-btn" onClick={() => nav("/admin")}>
-                    ⚙ Admin
+                {!isAdmin && (
+                  <button
+                    className="my-bookings-btn"
+                    onClick={() => nav("/trips")}
+                  >
+                    🎫 My Bookings
                   </button>
                 )}
 
