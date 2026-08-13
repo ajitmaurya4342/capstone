@@ -5,7 +5,7 @@ import moment from "moment";
 import api from "../services/api";
 import { useAuth } from "../context/AuthContext";
 
-import "./Seats.css";
+import "../styles/Seats.css";
 
 export default function Seats() {
   const { id } = useParams();
@@ -92,7 +92,7 @@ export default function Seats() {
    */
   const book = async () => {
     if (!user) {
-      nav("/login");
+      alert("Login required to book your seat");
       return;
     }
 

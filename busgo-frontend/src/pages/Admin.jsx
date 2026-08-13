@@ -8,7 +8,7 @@ import AdminTabs from "../components/admin/AdminTabs";
 import BusManagement from "../components/admin/BusManagement";
 import ScheduleManagement from "../components/admin/ScheduleManagement";
 
-import "../components/admin/admin.css";
+import "../styles/admin.css";
 
 const emptyBus = {
   busNumber: "",

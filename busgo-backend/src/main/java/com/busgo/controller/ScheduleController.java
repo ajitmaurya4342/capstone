@@ -22,6 +22,11 @@ public class ScheduleController {
         return service.getSchedule();
     }
 
+    @GetMapping("/cities")
+    public List<String> getCities() {
+        return service.getCities();
+    }
+
     @GetMapping("/search")
     public List<Schedule> search(@RequestParam String from, @RequestParam String to, @RequestParam LocalDate date) {
         return service.search(from, to, date);

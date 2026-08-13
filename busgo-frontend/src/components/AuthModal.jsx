@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import api from "../services/api";
-import "./AuthModal.css";
+import "../styles/AuthModal.css";
 
 export default function AuthModal({ mode = "login", onClose }) {
   const { login } = useAuth();
@@ -50,7 +50,7 @@ export default function AuthModal({ mode = "login", onClose }) {
         response.data?.role || response.data?.user?.role || "",
       ).toUpperCase();
 
-      window.location.href = role.includes("ADMIN") ? "/admin" : "/";
+      // window.location.href = role.includes("ADMIN") ? "/admin" : "/";
     } catch (err) {
       setError(err.response?.data?.message || "Invalid email or password");
     } finally {

@@ -1,4 +1,4 @@
-body{font-family:Arial,sans-serif;max-width:1000px;margin:auto;padding:20px;background:#f6f7f9}nav{display:flex;justify-content:space-between;margin-bottom:30px}nav span{display:flex;gap:12px}form{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}input,button{padding:10px}article{background:white;padding:16px;margin:10px 0;border-radius:8px}.grid{display:grid;grid-template-columns:repeat(4,70px);gap:10px;margin:20px 0}.grid button:disabled{opacity:.35}.grid .selected{outline:3px solid #333}a{color:#1464d2;text-decoration:none}
+body{font-family:Arial,sans-serif;max-width:1200px;margin:auto;padding:20px;background:#f6f7f9}nav{display:flex;justify-content:space-between;margin-bottom:30px}nav span{display:flex;gap:12px}form{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}input,button{padding:10px}article{background:white;padding:16px;margin:10px 0;border-radius:8px}.grid{display:grid;grid-template-columns:repeat(4,70px);gap:10px;margin:20px 0}.grid button:disabled{opacity:.35}.grid .selected{outline:3px solid #333}a{color:#1464d2;text-decoration:none}
 
 /* Admin panel */
 .admin-page{max-width:1200px;margin:0 auto;padding-bottom:60px}

@@ -1,16 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
-import "./Home.css";
+import "../styles/Home.css";
 import ScheduleTab from "../components/ScheduleTab";
-import moment from "moment";
 
 export default function Home() {
   const nav = useNavigate();
 
   const [form, setForm] = useState({
-    from: "Hyderabad",
-    to: "Bangalore",
+    from: "",
+    to: "",
     date: "",
   });
 
@@ -18,47 +17,157 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [noBusFound, setNoBusFound] = useState(false);
 
+  const [cities, setCities] = useState([]);
+  const [citiesLoading, setCitiesLoading] = useState(true);
+
+  /* =========================
+     LOAD CITIES
+  ========================= */
+
+  useEffect(() => {
+    const loadCities = async () => {
+      try {
+        setCitiesLoading(true);
+
+        const response = await api.get("/schedules/cities");
+
+        setCities(Array.isArray(response.data) ? response.data : []);
+      } catch (error) {
+        console.error("Failed to load cities", error);
+      } finally {
+        setCitiesLoading(false);
+      }
+    };
+
+    loadCities();
+  }, []);
+
+  /* =========================
+     FROM CITY CHANGE
+  ========================= */
+
+  const handleFromChange = (e) => {
+    const from = e.target.value;
+
+    setForm((prev) => ({
+      ...prev,
+
+      from,
+
+      // Clear TO if it is the same city
+      // as the newly selected FROM
+      to: prev.to === from ? "" : prev.to,
+    }));
+
+    // Clear previous search results
+    setResults([]);
+    setNoBusFound(false);
+  };
+
+  /* =========================
+     TO CITY CHANGE
+  ========================= */
+
+  const handleToChange = (e) => {
+    const to = e.target.value;
+
+    setForm((prev) => ({
+      ...prev,
+      to,
+    }));
+
+    setResults([]);
+    setNoBusFound(false);
+  };
+
+  /* =========================
+     DATE CHANGE
+  ========================= */
+
+  const handleDateChange = (e) => {
+    setForm((prev) => ({
+      ...prev,
+      date: e.target.value,
+    }));
+
+    setResults([]);
+    setNoBusFound(false);
+  };
+
+  /* =========================
+     SEARCH
+  ========================= */
+
   const search = async (e) => {
     e.preventDefault();
 
     if (!form.from || !form.to || !form.date) {
-      alert("Please select From, To and Date");
+      return;
+    }
+
+    if (form.from === form.to) {
+      alert("From and To cities cannot be the same.");
       return;
     }
 
     try {
       setLoading(true);
+      setNoBusFound(false);
 
-      const r = await api.get("/schedules/search", {
+      const response = await api.get("/schedules/search", {
         params: form,
       });
 
-      console.log({ r });
+      setResults(Array.isArray(response.data) ? response.data : []);
 
-      setResults(r.data);
-      if (r.data.length == 0) {
+      if (!response.data || response.data.length === 0) {
         setNoBusFound(true);
       }
-    } catch (e) {
-      alert(e.response?.data?.message || "Search failed");
+    } catch (error) {
+      alert(error.response?.data?.message || "Search failed");
     } finally {
       setLoading(false);
     }
   };
 
+  /* =========================
+     SWAP CITIES
+  ========================= */
+
   const swapCities = () => {
-    setForm({
-      ...form,
-      from: form.to,
-      to: form.from,
-    });
+    if (!form.from && !form.to) {
+      return;
+    }
+
+    setForm((prev) => ({
+      ...prev,
+      from: prev.to,
+      to: prev.from,
+    }));
+
+    setResults([]);
+    setNoBusFound(false);
   };
+
+  /* =========================
+     TO CITY OPTIONS
+     Remove selected FROM
+  ========================= */
+
+  const toCities = cities.filter((city) => city !== form.from);
+
+  /* =========================
+     TODAY
+  ========================= */
+
+  const today = new Date().toISOString().split("T")[0];
 
   return (
     <div className="busgo-page">
-      {/* NAVBAR */}
+      {/* =========================
+          HERO
+      ========================= */}
 
-      {/* HERO */}
       <section className="hero">
         <div className="hero-overlay"></div>
 
@@ -80,11 +189,15 @@ export default function Home() {
             </p>
           </div>
 
-          {/* SEARCH CARD */}
+          {/* =========================
+              SEARCH CARD
+          ========================= */}
+
           <div className="search-card" id="search">
             <div className="search-header">
               <div>
                 <h2>Find your bus</h2>
+
                 <p>Search buses for your next journey</p>
               </div>
 
@@ -93,57 +206,88 @@ export default function Home() {
 
             <form onSubmit={search}>
               <div className="search-fields">
-                {/* FROM */}
+                {/* =====================
+                    FROM
+                ===================== */}
+
                 <div className="field-group">
                   <label>FROM</label>
 
                   <div className="input-wrapper">
                     <span className="input-icon">📍</span>
 
-                    <input
-                      placeholder="Departure city"
+                    <select
                       value={form.from}
-                      onChange={(e) =>
-                        setForm({
-                          ...form,
-                          from: e.target.value,
-                        })
-                      }
-                    />
+                      onChange={handleFromChange}
+                      disabled={citiesLoading}
+                    >
+                      <option value="">
+                        {citiesLoading
+                          ? "Loading cities..."
+                          : "Select departure city"}
+                      </option>
+
+                      {cities.map((city) => (
+                        <option key={city} value={city}>
+                          {city}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
 
-                {/* SWAP */}
+                {/* =====================
+                    SWAP
+                ===================== */}
+
                 <button
                   type="button"
                   className="swap-btn"
                   onClick={swapCities}
+                  disabled={!form.from && !form.to}
                   title="Swap cities"
                 >
                   ⇄
                 </button>
 
-                {/* TO */}
+                {/* =====================
+                    TO
+                ===================== */}
+
                 <div className="field-group">
                   <label>TO</label>
 
-                  <div className="input-wrapper">
+                  <div
+                    className={`input-wrapper ${
+                      !form.from ? "input-disabled" : ""
+                    }`}
+                  >
                     <span className="input-icon">📍</span>
 
-                    <input
-                      placeholder="Arrival city"
+                    <select
                       value={form.to}
-                      onChange={(e) =>
-                        setForm({
-                          ...form,
-                          to: e.target.value,
-                        })
-                      }
-                    />
+                      onChange={handleToChange}
+                      disabled={!form.from}
+                    >
+                      <option value="">
+                        {!form.from
+                          ? "Select From city first"
+                          : "Select arrival city"}
+                      </option>
+
+                      {toCities.map((city) => (
+                        <option key={city} value={city}>
+                          {city}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
 
-                {/* DATE */}
+                {/* =====================
+                    DATE
+                ===================== */}
+
                 <div className="field-group date-field">
                   <label>TRAVEL DATE</label>
 
@@ -152,19 +296,22 @@ export default function Home() {
 
                     <input
                       type="date"
-                      min={new Date().toISOString().split("T")[0]}
+                      min={today}
                       value={form.date}
-                      onChange={(e) =>
-                        setForm({
-                          ...form,
-                          date: e.target.value,
-                        })
-                      }
+                      onChange={handleDateChange}
                     />
                   </div>
                 </div>
 
-                <button type="submit" className="search-btn" disabled={loading}>
+                {/* =====================
+                    SEARCH BUTTON
+                ===================== */}
+
+                <button
+                  type="submit"
+                  className="search-btn"
+                  disabled={loading || !form.from || !form.to || !form.date}
+                >
                   {loading ? "Searching..." : "Search Buses →"}
                 </button>
               </div>
@@ -173,9 +320,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FEATURES */}
+      {/* =========================
+          SEARCH RESULTS
+      ========================= */}
 
-      {/* SEARCH RESULTS */}
       {results.length > 0 && (
         <ScheduleTab
           results={results}
@@ -185,7 +333,10 @@ export default function Home() {
         />
       )}
 
-      {/* NO RESULTS */}
+      {/* =========================
+          NO RESULTS
+      ========================= */}
+
       {!loading && form.date && results.length === 0 && noBusFound && (
         <section className="no-results">
           <div className="empty-icon">🚌</div>
@@ -199,7 +350,10 @@ export default function Home() {
         </section>
       )}
 
-      {/* CTA */}
+      {/* =========================
+          CTA
+      ========================= */}
+
       <section className="cta-section">
         <div>
           <span>YOUR JOURNEY STARTS HERE</span>
@@ -208,19 +362,12 @@ export default function Home() {
 
           <p>Find your perfect bus and book your seat today.</p>
         </div>
-
-        {/* <button
-          onClick={() =>
-            document
-              .getElementById("search")
-              ?.scrollIntoView({ behavior: "smooth" })
-          }
-        >
-          Search Buses →
-        </button> */}
       </section>
 
-      {/* FOOTER */}
+      {/* =========================
+          FOOTER
+      ========================= */}
+
       <footer>
         <div className="footer-container">
           <div className="footer-brand">
@@ -228,7 +375,16 @@ export default function Home() {
               🚌 Bus<span>Go</span>
             </div>
 
-            <p>Making bus travel simple, comfortable and accessible.</p>
+            <p className="footer-description">
+              BusGo is a modern bus booking platform designed to make travel
+              easier from booking to boarding. We connect travelers with
+              reliable bus operators, convenient routes, flexible schedules, and
+              transparent fares—all through a simple and user-friendly
+              experience. Whether you're planning a daily journey, a weekend
+              trip, or a long-distance adventure, BusGo helps you discover the
+              right bus, choose your preferred seat, and book your journey with
+              confidence.
+            </p>
           </div>
         </div>
 

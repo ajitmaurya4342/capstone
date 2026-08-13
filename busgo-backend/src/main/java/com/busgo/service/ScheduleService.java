@@ -6,6 +6,7 @@ import com.busgo.repository.*;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Stream;
 
 @Service
 public class ScheduleService {
@@ -59,5 +60,19 @@ public class ScheduleService {
 
     public void delete(UUID id) {
         repo.deleteById(id);
+    }
+
+    public List<String> getCities() {
+        return repo.findAll()
+                .stream()
+                .flatMap(schedule -> Stream.of(
+                        schedule.getFromCity(),
+                        schedule.getToCity()))
+                .filter(Objects::nonNull)
+                .map(String::trim)
+                .filter(city -> !city.isEmpty())
+                .distinct()
+                .sorted(String.CASE_INSENSITIVE_ORDER)
+                .toList();
     }
 }
